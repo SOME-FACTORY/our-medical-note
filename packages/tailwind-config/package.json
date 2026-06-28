@@ -1,0 +1,16 @@
+{
+  "name": "@ours-medical-note/tailwind-config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./base": "./base.js",
+    "./web.css": "./web.css",
+    "./web": "./web.js",
+    "./react": "./web.js",
+    "./native": "./native.js"
+  },
+  "peerDependencies": {
+    "tailwindcss": ">=3.4.19 <5"
+  }
+}

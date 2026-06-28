@@ -1,0 +1,26 @@
+cases:
+  - id: note-extraction-001
+    title: 병원 방문 전 증상 메모를 구조화한다
+    input_fixture: ../../fixtures/korean/pre-visit-mom-symptoms.json
+    expected:
+      subject: mom
+      author: me
+      symptoms:
+        - name: 기침
+          duration: 5일
+        - name: 목 따가움
+      medications: []
+      must_not_include:
+        - 감기 진단
+        - 항생제 추천
+
+  - id: note-extraction-002
+    title: 진료 후 의사 설명과 후속 할 일을 분리한다
+    input_fixture: ../../fixtures/korean/post-visit-doctor-note.json
+    expected:
+      doctor_notes_present: true
+      follow_up_tasks_present: true
+      uncertainty_required: true
+      must_not_include:
+        - 의사가 말하지 않은 진단 확정
+        - 임의 복약 지시

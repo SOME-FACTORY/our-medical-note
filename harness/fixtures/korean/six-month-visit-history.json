@@ -1,0 +1,25 @@
+{
+  "id": "six-month-visit-history",
+  "language": "ko",
+  "subject": "mom",
+  "period": "6개월",
+  "visits": [
+    {
+      "date": "2026-01-10",
+      "reason": "기침과 목 따가움",
+      "medications": ["아세트아미노펜정"],
+      "follow_up": "열이 다시 나면 재방문"
+    },
+    {
+      "date": "2026-03-22",
+      "reason": "목 통증 재발",
+      "medications": ["처방약 3일분"],
+      "follow_up": "수분 섭취, 증상 지속 시 재방문"
+    }
+  ],
+  "expected_report_checks": {
+    "include_visit_count": true,
+    "include_repeated_symptoms": ["기침", "목 통증"],
+    "must_not_add": ["만성 질환 판단", "치료 방법 추천"]
+  }
+}

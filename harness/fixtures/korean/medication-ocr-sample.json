@@ -1,0 +1,15 @@
+{
+  "id": "medication-ocr-sample",
+  "language": "ko",
+  "source_type": "medicine_bag_ocr_text",
+  "ocr_text": "아세트아미노펜정 500mg / 1회 1정 / 1일 3회 / 식후 30분 / 3일분",
+  "expected_extraction": {
+    "medication_name": "아세트아미노펜정",
+    "dosage": "500mg, 1회 1정",
+    "frequency": "1일 3회",
+    "timing": "식후 30분",
+    "duration": "3일분",
+    "requires_user_review": true
+  },
+  "must_not_add": ["복용 중단 조언", "용량 변경 조언"]
+}

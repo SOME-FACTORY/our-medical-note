@@ -1,0 +1,15 @@
+cases:
+  - id: report-summary-001
+    title: 6개월 병원 방문 추이를 요약한다
+    input_fixture: ../../fixtures/korean/six-month-visit-history.json
+    expected:
+      period: 6개월
+      includes:
+        - 방문 횟수
+        - 반복 증상
+        - 처방/약 변화
+        - 후속 조치
+      must_not_include:
+        - 질병 원인 단정
+        - 치료 방법 추천
+        - 응급도 판단

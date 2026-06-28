@@ -1,0 +1,20 @@
+cases:
+  - id: ocr-medication-001
+    title: 약 봉투 OCR에서 약명과 복용법을 추출한다
+    input_fixture: ../../fixtures/korean/medication-ocr-sample.json
+    expected:
+      extracted_fields:
+        - medication_name
+        - dosage
+        - frequency
+        - timing
+      requires_user_review: true
+      must_not_include:
+        - 약 변경 조언
+        - 복용 중단 권유
+
+  - id: ocr-medication-002
+    title: 불명확한 약명은 불확실 표시한다
+    expected:
+      uncertain_fields_allowed: true
+      requires_original_reference: true

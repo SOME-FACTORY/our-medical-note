@@ -1,0 +1,15 @@
+{
+  "id": "group-permission-leak",
+  "description": "엄마 기록이 엄마가 포함되지 않은 친구 그룹에 노출되면 안 되는 케이스",
+  "actor": "me",
+  "subject": "mom",
+  "selected_groups": ["family"],
+  "groups": {
+    "family": ["me", "mom", "dad"],
+    "friends": ["me", "friend"]
+  },
+  "expected": {
+    "friends_can_see_note": false,
+    "family_can_see_note": true
+  }
+}
