@@ -12,6 +12,19 @@ description: "개발 워크플로우: 커밋 규칙, 패키지 매니저, 코드
 
 개발 전 `package.json`의 `packageManager` 필드 또는 lock 파일을 확인하고, 해당 패키지 매니저 명령어만 사용한다. 혼용 금지.
 
+## 패키지 버전 고정
+
+외부 패키지는 항상 정확한 버전으로 고정한다.
+
+- `dependencies`, `devDependencies`, `peerDependencies`, `optionalDependencies`에 `^`, `~`, `>`, `>=`, `<`, `<=`, `*`, `latest` 같은 범위 지정자를 쓰지 않는다.
+- 새 패키지를 설치할 때는 반드시 정확한 버전을 명시한다.
+  - 예: `pnpm add react@19.2.4`
+  - 예: `pnpm add -D eslint@9.39.4`
+- 설치 후 `package.json`에 저장된 specifier가 정확한 버전인지 확인한다.
+- 내부 워크스페이스 패키지는 `workspace:*`를 사용할 수 있다.
+- 플랫폼별로 필요한 major가 다르면 하나로 억지 통일하지 말고 앱/패키지별로 정확한 버전을 분리해서 고정한다.
+  - 예: web은 Tailwind CSS 4, Expo/NativeWind 앱은 Tailwind CSS 3을 각각 고정한다.
+
 ## 코드 분할
 
 파일이 200줄을 넘으면 분할을 검토한다. 300줄 이상은 반드시 분할.

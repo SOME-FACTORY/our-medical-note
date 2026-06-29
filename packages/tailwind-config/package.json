@@ -9,8 +9,5 @@
     "./web": "./web.js",
     "./react": "./web.js",
     "./native": "./native.js"
-  },
-  "peerDependencies": {
-    "tailwindcss": ">=3.4.19 <5"
   }
 }

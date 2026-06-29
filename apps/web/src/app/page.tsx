@@ -1,139 +1,112 @@
-const visits = [
-  {
-    person: "엄마",
-    group: "가족 그룹",
-    title: "내과 방문 전 증상 정리",
-    date: "오늘 14:30",
-    tone: "border-emerald-200 bg-emerald-50 text-emerald-800",
-  },
-  {
-    person: "나",
-    group: "개인 기록",
-    title: "처방 약 복용 메모",
-    date: "어제",
-    tone: "border-sky-200 bg-sky-50 text-sky-800",
-  },
-  {
-    person: "할머니",
-    group: "돌봄 그룹",
-    title: "6개월 방문 추이 확인",
-    date: "이번 주",
-    tone: "border-rose-200 bg-rose-50 text-rose-800",
-  },
-];
+import { redirect } from "next/navigation";
 
-const reportBars = [
-  { label: "증상 메모", width: "w-10/12", color: "bg-emerald-500" },
-  { label: "복약 변화", width: "w-7/12", color: "bg-sky-500" },
-  { label: "후속 할 일", width: "w-5/12", color: "bg-rose-500" },
-];
+import { BrandLogo } from "@/components/brand-logo";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createSupabaseServerClient();
+
+  if (!supabase) {
+    redirect("/login");
+  }
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/login");
+  }
+
+  const displayName =
+    user.user_metadata?.name ??
+    user.user_metadata?.full_name ??
+    user.email ??
+    "나";
+
   return (
-    <main className="min-h-dvh bg-background text-foreground">
-      <section className="mx-auto grid min-h-dvh w-full max-w-7xl gap-10 px-5 py-8 md:grid-cols-[1fr_420px] md:items-center md:px-8 lg:px-10">
-        <div className="flex flex-col gap-8">
-          <header className="flex items-center justify-between gap-4">
+    <main className="min-h-dvh bg-[#e9ebf2] text-[#23263a]">
+      <section className="mx-auto flex min-h-dvh w-full max-w-app items-center justify-center px-5 py-6 tablet:px-8 wide:px-0">
+        <div className="grid w-full overflow-hidden rounded-[2rem] bg-white shadow-[0_32px_90px_-50px_rgba(28,30,55,.65)] ring-1 ring-[#e4e7f2] tablet:min-h-[720px] tablet:grid-cols-[210px_1fr] desktop:min-h-[760px] desktop:grid-cols-[264px_1fr]">
+          <aside className="hidden flex-col border-r border-[#e4e7f2] bg-gradient-to-b from-[#fbfbfe] to-[#f2f4fb] p-5 tablet:flex desktop:p-7">
             <div className="flex items-center gap-3">
-              <div className="grid size-10 place-items-center rounded-lg bg-zinc-950 text-sm font-semibold text-white dark:bg-white dark:text-zinc-950">
-                OM
-              </div>
+              <BrandLogo priority />
               <div>
-                <p className="text-sm font-semibold">Our&apos;s Medical Note</p>
-                <p className="text-xs text-zinc-500">관계 기반 의료 기록</p>
+                <p className="text-sm font-extrabold">우리 가족 의료노트</p>
+                <p className="mt-1 text-xs font-semibold text-[#8a8fa4]">
+                  가족 의료 기록
+                </p>
               </div>
             </div>
-            <button className="rounded-md bg-zinc-950 px-4 py-2 text-sm font-medium text-white transition hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200">
-              기록 시작
-            </button>
-          </header>
 
-          <div className="max-w-3xl">
-            <p className="mb-4 text-sm font-medium text-emerald-700 dark:text-emerald-300">
-              병원 가기 전, 가족과 함께 준비하는 노트
-            </p>
-            <h1 className="text-4xl font-semibold leading-tight text-zinc-950 dark:text-white md:text-6xl">
-              의료 기록은 사람과 그룹을 기준으로 안전하게 정리합니다.
-            </h1>
-            <p className="mt-5 max-w-2xl text-base leading-8 text-zinc-600 dark:text-zinc-300 md:text-lg">
-              증상 메모, 진료 중 기록, 약 정보, 후속 할 일을 한 곳에 모으고
-              필요한 그룹에만 공유할 수 있게 준비 중입니다.
-            </p>
-          </div>
+            <div className="mt-7 text-xs font-extrabold tracking-[0.08em] text-[#a1a6ba] desktop:mt-9">
+              그룹
+            </div>
+            <div className="mt-3 rounded-3xl border border-[#e7e9f3] bg-white p-4 shadow-[0_12px_24px_-22px_rgba(40,42,70,.35)]">
+              <div className="flex items-center gap-3">
+                <div className="flex size-11 items-center justify-center rounded-2xl bg-[#eef0fb] text-xl">
+                  +
+                </div>
+                <div>
+                  <p className="text-sm font-extrabold">내 그룹</p>
+                  <p className="mt-1 text-xs font-semibold text-[#8a8fa4]">
+                    아직 그룹 없음
+                  </p>
+                </div>
+              </div>
+            </div>
 
-          <div className="grid gap-3 sm:grid-cols-3">
-            <div className="border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
-              <p className="text-2xl font-semibold">3</p>
-              <p className="mt-1 text-sm text-zinc-500">공유 그룹</p>
+            <div className="mt-auto rounded-3xl border border-[#e5e8f3] bg-white p-4">
+              <p className="text-xs font-extrabold tracking-[0.04em] text-[#9aa0b5]">
+                다음 단계
+              </p>
+              <p className="mt-3 text-sm font-extrabold leading-6">
+                그룹 만들기와 초대 흐름을 이어서 붙일 수 있어요.
+              </p>
             </div>
-            <div className="border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
-              <p className="text-2xl font-semibold">12</p>
-              <p className="mt-1 text-sm text-zinc-500">이번 달 기록</p>
-            </div>
-            <div className="border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
-              <p className="text-2xl font-semibold">6개월</p>
-              <p className="mt-1 text-sm text-zinc-500">리포트 범위</p>
+          </aside>
+
+          <div className="flex min-h-dvh flex-col bg-[#f4f5f8] tablet:min-h-0">
+            <header className="flex items-center justify-between gap-4 px-6 pb-4 pt-12 tablet:px-7 tablet:pt-8 desktop:px-10 desktop:pt-10">
+              <div>
+                <p className="text-sm font-bold text-[#8b8fa3]">
+                  {displayName}님
+                </p>
+                <h1 className="mt-1 text-2xl font-extrabold">내 그룹</h1>
+              </div>
+              <div className="flex size-11 items-center justify-center rounded-full border border-[#ebecf3] bg-white text-sm font-extrabold text-[#4f53c9]">
+                {String(displayName).charAt(0)}
+              </div>
+            </header>
+
+            <div className="flex flex-1 flex-col px-6 pb-8 tablet:px-7 desktop:px-10">
+              <div className="flex flex-1 items-center justify-center rounded-[1.75rem] border border-[#ebecf3] bg-white p-6 text-center shadow-[0_18px_40px_-34px_rgba(40,42,70,.45)] desktop:p-8">
+                <div className="max-w-sm">
+                  <div className="mx-auto flex justify-center">
+                    <BrandLogo priority size="md" />
+                  </div>
+                  <h2 className="mt-6 text-xl font-extrabold">
+                    아직 만든 그룹이 없어요
+                  </h2>
+                  <p className="mt-3 text-sm leading-7 text-[#707487]">
+                    이번 단계에서는 로그인까지만 연결했습니다. 다음 단계에서
+                    가족, 돌봄, 친구 그룹을 만들고 초대할 수 있게 이어가면
+                    됩니다.
+                  </p>
+                  <button
+                    className="mt-7 h-12 rounded-2xl bg-[#dcdde6] px-6 text-sm font-extrabold text-[#a3a6b6]"
+                    disabled
+                    type="button"
+                  >
+                    그룹 만들기 준비 중
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-        <aside className="border border-zinc-200 bg-white p-4 shadow-xl shadow-zinc-200/60 dark:border-zinc-800 dark:bg-zinc-950 dark:shadow-black/30">
-          <div className="flex items-start justify-between gap-4 border-b border-zinc-200 pb-4 dark:border-zinc-800">
-            <div>
-              <p className="text-sm font-semibold text-zinc-950 dark:text-white">
-                오늘의 준비
-              </p>
-              <p className="mt-1 text-xs text-zinc-500">
-                기록 대상자와 공유 그룹을 먼저 확인하세요.
-              </p>
-            </div>
-            <span className="rounded-md bg-emerald-100 px-2.5 py-1 text-xs font-medium text-emerald-800">
-              안전 공유
-            </span>
-          </div>
-
-          <div className="mt-4 flex flex-col gap-3">
-            {visits.map((visit) => (
-              <article
-                className="border border-zinc-200 p-4 transition hover:border-zinc-300 dark:border-zinc-800 dark:hover:border-zinc-700"
-                key={visit.title}
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <span
-                    className={`rounded-md border px-2.5 py-1 text-xs font-medium ${visit.tone}`}
-                  >
-                    {visit.person}
-                  </span>
-                  <span className="text-xs text-zinc-500">{visit.date}</span>
-                </div>
-                <h2 className="mt-3 text-base font-semibold text-zinc-950 dark:text-white">
-                  {visit.title}
-                </h2>
-                <p className="mt-1 text-sm text-zinc-500">{visit.group}</p>
-              </article>
-            ))}
-          </div>
-
-          <div className="mt-5 border border-zinc-200 p-4 dark:border-zinc-800">
-            <div className="mb-4 flex items-center justify-between">
-              <p className="text-sm font-semibold">6개월 리포트</p>
-              <p className="text-xs text-zinc-500">기록 기반 추이</p>
-            </div>
-            <div className="space-y-3">
-              {reportBars.map((bar) => (
-                <div key={bar.label}>
-                  <div className="mb-1 flex justify-between text-xs text-zinc-500">
-                    <span>{bar.label}</span>
-                  </div>
-                  <div className="h-2 overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-800">
-                    <div className={`h-full ${bar.width} ${bar.color}`} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </aside>
       </section>
     </main>
   );
 }
+
