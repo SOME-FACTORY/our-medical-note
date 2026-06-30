@@ -1,4 +1,5 @@
 import { createServerClient } from "@supabase/ssr";
+import type { Database } from "@ours-medical-note/supabase";
 import { cookies } from "next/headers";
 
 import { getSupabasePublicConfig } from "./config";
@@ -12,7 +13,7 @@ export async function createSupabaseServerClient() {
 
   const cookieStore = await cookies();
 
-  return createServerClient(config.url, config.anonKey, {
+  return createServerClient<Database>(config.url, config.anonKey, {
     cookies: {
       getAll() {
         return cookieStore.getAll();
@@ -30,7 +31,7 @@ export async function createSupabaseWritableServerClient() {
 
   const cookieStore = await cookies();
 
-  return createServerClient(config.url, config.anonKey, {
+  return createServerClient<Database>(config.url, config.anonKey, {
     cookies: {
       getAll() {
         return cookieStore.getAll();
@@ -43,4 +44,3 @@ export async function createSupabaseWritableServerClient() {
     },
   });
 }
-

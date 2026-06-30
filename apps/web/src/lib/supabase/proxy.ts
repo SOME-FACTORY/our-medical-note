@@ -1,5 +1,8 @@
 import { createServerClient } from "@supabase/ssr";
+import type { Database } from "@ours-medical-note/supabase";
 import { NextResponse, type NextRequest } from "next/server";
+
+import { hasValidAppSession } from "@/lib/auth/session-lifecycle";
 
 import { getSupabasePublicConfig } from "./config";
 
@@ -11,7 +14,7 @@ export async function updateSupabaseSession(request: NextRequest) {
     return response;
   }
 
-  const supabase = createServerClient(config.url, config.anonKey, {
+  const supabase = createServerClient<Database>(config.url, config.anonKey, {
     cookies: {
       getAll() {
         return request.cookies.getAll();
@@ -40,6 +43,10 @@ export async function updateSupabaseSession(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname;
 
+  if (user && !hasValidAppSession(request)) {
+    return NextResponse.redirect(new URL("/auth/expired", request.url));
+  }
+
   if (user && pathname === "/login") {
     return NextResponse.redirect(new URL("/", request.url));
   }
@@ -50,4 +57,3 @@ export async function updateSupabaseSession(request: NextRequest) {
 
   return response;
 }
-

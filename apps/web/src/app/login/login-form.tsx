@@ -29,16 +29,17 @@ export function LoginForm({ isConfigured }: LoginFormProps) {
         <input
           checked={confirmed}
           className="sr-only"
+          name="safety_notice_confirmed"
           onChange={(event) => setConfirmed(event.target.checked)}
           type="checkbox"
         />
         <span className="text-sm font-medium leading-6 text-[#4a4e62]">
-          서비스가 진단이나 치료를 대신하지 않는다는 안내를 확인했어요.
+          안내를 확인했어요.
         </span>
       </label>
 
       <button
-        className="flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-[#FEE500] text-base font-extrabold text-[#191919] shadow-[0_16px_26px_-18px_rgba(40,42,70,.55)] transition enabled:hover:-translate-y-0.5 enabled:hover:shadow-[0_20px_30px_-18px_rgba(40,42,70,.65)] disabled:cursor-not-allowed disabled:bg-[#dcdde6] disabled:text-[#a3a6b6]"
+        className="flex h-14 w-full cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-[1.1rem] bg-[#FEE500] text-base font-bold text-[#191919] shadow-[0_16px_26px_-18px_rgba(40,42,70,.55)] transition enabled:hover:-translate-y-0.5 enabled:hover:shadow-[0_20px_30px_-18px_rgba(40,42,70,.62)] disabled:cursor-not-allowed disabled:bg-[#dcdde6] disabled:text-[#a3a6b6]"
         disabled={!canSubmit}
         type="submit"
       >
@@ -51,4 +52,3 @@ export function LoginForm({ isConfigured }: LoginFormProps) {
     </form>
   );
 }
-
