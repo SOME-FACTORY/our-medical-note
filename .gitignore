@@ -21,8 +21,10 @@ pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# local QA artifacts
+audits/
+
 # OS/editor
 .DS_Store
 .idea/
 .vscode/
-

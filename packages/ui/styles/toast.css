@@ -1,0 +1,47 @@
+@source "../src/**/*.{ts,tsx}";
+
+@layer base {
+  @keyframes toast-enter {
+    from {
+      opacity: 0;
+      transform: translate3d(1rem, -0.25rem, 0) scale(0.98);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  @keyframes toast-auto-hide {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+    }
+  }
+
+  .toast-motion {
+    transform: translate3d(var(--toast-x, 0), 0, 0);
+    transition:
+      opacity 180ms ease,
+      transform 220ms ease;
+  }
+
+  .toast-motion[data-state="open"] {
+    animation:
+      toast-enter 180ms ease both,
+      toast-auto-hide 180ms ease var(--toast-duration, 3000ms) forwards;
+  }
+
+  .toast-motion[data-state="closing"] {
+    opacity: 0;
+    transform: translate3d(1rem, -0.25rem, 0) scale(0.98);
+  }
+
+  .toast-motion[data-dragging="true"] {
+    transition: none;
+  }
+}

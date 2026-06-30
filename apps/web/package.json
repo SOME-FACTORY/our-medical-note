@@ -10,6 +10,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@ours-medical-note/supabase": "workspace:*",
+    "@ours-medical-note/ui": "workspace:*",
     "@supabase/ssr": "0.12.0",
     "@supabase/supabase-js": "2.108.2",
     "next": "16.2.9",

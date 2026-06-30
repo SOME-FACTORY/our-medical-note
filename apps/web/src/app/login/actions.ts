@@ -15,7 +15,11 @@ function getRedirectOrigin() {
   return null;
 }
 
-export async function signInWithKakao() {
+export async function signInWithKakao(formData: FormData) {
+  if (formData.get("safety_notice_confirmed") !== "on") {
+    redirect("/login?error=notice");
+  }
+
   const supabase = await createSupabaseWritableServerClient();
 
   if (!supabase) {

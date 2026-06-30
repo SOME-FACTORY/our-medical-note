@@ -1,4 +1,8 @@
 import type { Metadata } from "next";
+
+import { ToastProvider } from "@ours-medical-note/ui/containers/toast";
+import "@ours-medical-note/ui/styles/toast.css";
+
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -13,7 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className="h-full antialiased">
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        <ToastProvider>{children}</ToastProvider>
+      </body>
     </html>
   );
 }

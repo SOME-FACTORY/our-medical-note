@@ -1,22 +1,76 @@
 @import "tailwindcss";
 @import "@ours-medical-note/tailwind-config/web.css";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+@source "../../../../packages/ui/src/**/*.{ts,tsx}";
 
 @layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #171717;
+    --app-min-width: 360px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: #0a0a0a;
+      --foreground: #ededed;
+    }
+  }
+
+  html,
+  body {
+    inline-size: max(100%, var(--app-min-width));
+    min-width: var(--app-min-width);
+  }
+
   body {
     background: var(--background);
     color: var(--foreground);
     font-family: Arial, Helvetica, sans-serif;
+    overflow-x: auto;
+  }
+
+  button,
+  a {
+    cursor: pointer;
+  }
+}
+
+@layer utilities {
+  @keyframes soft-enter {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes quiet-breathe {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-3px);
+    }
+  }
+
+  .soft-enter {
+    animation: soft-enter 560ms ease-out both;
+  }
+
+  .quiet-breathe {
+    animation: quiet-breathe 4.8s ease-in-out infinite;
+  }
+
+  .paper-surface {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.42) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.32) 1px, transparent 1px);
+    background-size: 28px 28px;
   }
 }
