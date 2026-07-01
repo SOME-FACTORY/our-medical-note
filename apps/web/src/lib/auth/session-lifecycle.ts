@@ -2,6 +2,7 @@ import type { NextRequest, NextResponse } from "next/server";
 
 export const APP_SESSION_COOKIE_NAME = "omn_session_started_at";
 export const APP_SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 7;
+export const LAST_GROUP_COOKIE_NAME = "omn_last_group_id";
 
 const APP_SESSION_MAX_AGE_MS = APP_SESSION_MAX_AGE_SECONDS * 1000;
 
@@ -23,8 +24,16 @@ export function markAppSessionStarted(response: NextResponse) {
   );
 }
 
+export function rememberLastGroup(response: NextResponse, groupId: string) {
+  response.cookies.set(LAST_GROUP_COOKIE_NAME, groupId, getCookieOptions());
+}
+
 export function clearAppSession(response: NextResponse) {
   response.cookies.set(APP_SESSION_COOKIE_NAME, "", {
+    ...getCookieOptions(),
+    maxAge: 0,
+  });
+  response.cookies.set(LAST_GROUP_COOKIE_NAME, "", {
     ...getCookieOptions(),
     maxAge: 0,
   });
