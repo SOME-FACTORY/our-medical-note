@@ -62,7 +62,7 @@ export function LoginPreviewCarousel({
       items={featureSlides}
       renderItem={(slide, index) => (
         <article
-          className={`rounded-[1.35rem] border border-[#e8eaf3] bg-white/90 shadow-[0_18px_36px_-32px_rgba(40,42,70,.46)] ${
+          className={`app-interactive rounded-[1.35rem] border border-[#e8eaf3] bg-white/90 shadow-[0_18px_36px_-32px_rgba(40,42,70,.46)] ${
             compact ? "p-3.5 tablet:p-4" : "p-4"
           }`}
         >

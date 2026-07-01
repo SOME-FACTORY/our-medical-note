@@ -6,6 +6,7 @@ import { BrandLogo } from "@/components/brand-logo";
 import { getSupabasePublicConfig } from "@/lib/supabase/config";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
+import { ClearUrlOnMount } from "../clear-url-on-mount";
 import { LoginForm } from "./login-form";
 import { LoginPreviewCarousel } from "./login-preview-carousel";
 
@@ -77,17 +78,12 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
       {toastMessage ? (
         <>
           <ToastOnMount toast={{ title: toastMessage, variant: "success" }} />
-          <script
-            dangerouslySetInnerHTML={{
-              __html:
-                'window.history.replaceState(window.history.state,"",window.location.pathname+window.location.hash);',
-            }}
-          />
+          <ClearUrlOnMount />
         </>
       ) : null}
 
       <section className="mx-auto flex min-h-dvh w-full max-w-app items-center justify-center px-5 py-6 tablet:px-8 wide:px-0">
-        <div className="grid w-full overflow-hidden rounded-[1.75rem] bg-white shadow-[0_28px_80px_-58px_rgba(28,30,55,.72)] ring-1 ring-[#e4e7f2] tablet:min-h-[720px] tablet:grid-cols-[minmax(0,1fr)_340px] desktop:min-h-[760px] desktop:grid-cols-[minmax(0,1fr)_460px]">
+        <div className="soft-enter grid w-full overflow-hidden rounded-[1.75rem] bg-white shadow-[0_28px_80px_-58px_rgba(28,30,55,.72)] ring-1 ring-[#e4e7f2] tablet:min-h-[720px] tablet:grid-cols-[minmax(0,1fr)_340px] desktop:min-h-[760px] desktop:grid-cols-[minmax(0,1fr)_460px]">
           <section className="paper-surface hidden min-w-0 bg-[#fbfbfe] tablet:flex tablet:flex-col tablet:px-6 tablet:py-8 desktop:px-12 desktop:py-10">
             <div className="flex items-center gap-3">
               <BrandLogo priority />
@@ -143,7 +139,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                 compact
               />
 
-              <div className="mt-7 rounded-[1.35rem] border border-[#e8eaf3] bg-white p-5 shadow-[0_18px_40px_-34px_rgba(40,42,70,.42)] desktop:mt-8">
+              <div className="app-interactive mt-7 rounded-[1.35rem] border border-[#e8eaf3] bg-white p-5 shadow-[0_18px_40px_-34px_rgba(40,42,70,.42)] desktop:mt-8">
                 <div className="flex gap-3">
                   <div className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-[#fff3e7] text-sm font-bold text-[#b96742]">
                     !

@@ -59,6 +59,16 @@
     }
   }
 
+  @keyframes skeleton-sheen {
+    from {
+      transform: translateX(-100%);
+    }
+
+    to {
+      transform: translateX(100%);
+    }
+  }
+
   .soft-enter {
     animation: soft-enter 560ms ease-out both;
   }
@@ -72,5 +82,64 @@
       linear-gradient(rgba(255, 255, 255, 0.42) 1px, transparent 1px),
       linear-gradient(90deg, rgba(255, 255, 255, 0.32) 1px, transparent 1px);
     background-size: 28px 28px;
+  }
+
+  .app-interactive {
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      background-color 180ms ease;
+  }
+
+  .app-interactive:hover {
+    transform: translateY(-2px);
+  }
+
+  .app-interactive:active {
+    transform: translateY(0);
+  }
+
+  .app-focus {
+    outline: none;
+  }
+
+  .app-focus:focus-visible {
+    box-shadow:
+      0 0 0 3px rgba(79, 83, 201, 0.16),
+      0 0 0 1px rgba(79, 83, 201, 0.36);
+  }
+
+  .skeleton-surface {
+    position: relative;
+    overflow: hidden;
+    background: #eef0f6;
+  }
+
+  .skeleton-surface::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.64),
+      transparent
+    );
+    animation: skeleton-sheen 1.35s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .soft-enter,
+    .quiet-breathe,
+    .skeleton-surface::after {
+      animation: none;
+    }
+
+    .app-interactive,
+    .app-interactive:hover,
+    .app-interactive:active {
+      transform: none;
+    }
   }
 }

@@ -2,9 +2,18 @@ import { createServerClient } from "@supabase/ssr";
 import type { Database } from "@ours-medical-note/supabase";
 import { NextResponse, type NextRequest } from "next/server";
 
-import { hasValidAppSession } from "@/lib/auth/session-lifecycle";
+import {
+  hasValidAppSession,
+  rememberLastGroup,
+} from "@/lib/auth/session-lifecycle";
 
 import { getSupabasePublicConfig } from "./config";
+
+function getGroupHomeId(pathname: string) {
+  const match = /^\/groups\/([^/]+)$/.exec(pathname);
+
+  return match?.[1] ?? null;
+}
 
 export async function updateSupabaseSession(request: NextRequest) {
   const config = getSupabasePublicConfig();
@@ -53,6 +62,12 @@ export async function updateSupabaseSession(request: NextRequest) {
 
   if (!user && pathname === "/") {
     return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  const groupHomeId = getGroupHomeId(pathname);
+
+  if (user && groupHomeId) {
+    rememberLastGroup(response, groupHomeId);
   }
 
   return response;

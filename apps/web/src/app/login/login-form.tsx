@@ -14,7 +14,7 @@ export function LoginForm({ isConfigured }: LoginFormProps) {
 
   return (
     <form action={signInWithKakao} className="mt-auto w-full space-y-4">
-      <label className="flex cursor-pointer items-start gap-3 rounded-2xl px-1 py-2">
+      <label className="app-focus app-interactive flex cursor-pointer items-start gap-3 rounded-2xl px-1 py-2">
         <span
           className={`mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-lg border transition ${
             confirmed
@@ -39,7 +39,7 @@ export function LoginForm({ isConfigured }: LoginFormProps) {
       </label>
 
       <button
-        className="flex h-14 w-full cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-[1.1rem] bg-[#FEE500] text-base font-bold text-[#191919] shadow-[0_16px_26px_-18px_rgba(40,42,70,.55)] transition enabled:hover:-translate-y-0.5 enabled:hover:shadow-[0_20px_30px_-18px_rgba(40,42,70,.62)] disabled:cursor-not-allowed disabled:bg-[#dcdde6] disabled:text-[#a3a6b6]"
+        className="app-focus app-interactive flex h-14 w-full cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-[1.1rem] bg-[#FEE500] text-base font-bold text-[#191919] shadow-[0_16px_26px_-18px_rgba(40,42,70,.55)] enabled:hover:shadow-[0_20px_30px_-18px_rgba(40,42,70,.62)] disabled:cursor-not-allowed disabled:bg-[#dcdde6] disabled:text-[#a3a6b6]"
         disabled={!canSubmit}
         type="submit"
       >
